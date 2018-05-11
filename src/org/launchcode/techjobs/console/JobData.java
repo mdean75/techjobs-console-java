@@ -83,6 +83,17 @@ public class JobData {
 
         return jobs;
     }
+    
+    public static ArrayList<HashMap<String, String>> findByValue(String searchTerm) {
+        // load data, if not already loaded
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        // TODO: 5/11/18 search all columns 
+        
+        return jobs;
+    }
 
     /**
      * Read in data from a CSV file and store it in a list
