@@ -7,19 +7,18 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
  */
-public class JobData {
+public class JobData implements Comparator<HashMap<String, String>> {
 
     private static final String DATA_FILE = "resources/job_data.csv";
     private static Boolean isDataLoaded = false;
 
     private static ArrayList<HashMap<String, String>> allJobs;
+    private static String sortField;
 
     /**
      * Fetch list of all values from loaded data,
@@ -35,6 +34,9 @@ public class JobData {
 
         ArrayList<String> values = new ArrayList<>();
 
+        sortField = field;
+
+
         for (HashMap<String, String> row : allJobs) {
             String aValue = row.get(field);
 
@@ -42,7 +44,7 @@ public class JobData {
                 values.add(aValue);
             }
         }
-
+        Collections.sort(values);
         return values;
     }
 
@@ -149,4 +151,9 @@ public class JobData {
         }
     }
 
+    @Override
+    public int compare(HashMap<String, String> o1, HashMap<String, String> o2) {
+        return o1.get(sortField).toLowerCase().compareTo(o2.get(sortField).toLowerCase());
+        // TODO: 5/11/18 need to fix, is still case sensitive 
+    }
 }
