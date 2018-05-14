@@ -36,6 +36,8 @@ public class JobData implements Comparator<HashMap<String, String>> {
 
         sortField = field;
 
+        // sort the data before processing
+        Collections.sort(allJobs, new JobData());
 
         for (HashMap<String, String> row : allJobs) {
             String aValue = row.get(field);
@@ -44,7 +46,7 @@ public class JobData implements Comparator<HashMap<String, String>> {
                 values.add(aValue);
             }
         }
-        Collections.sort(values);
+
         return values;
     }
 
@@ -85,7 +87,13 @@ public class JobData implements Comparator<HashMap<String, String>> {
 
         return jobs;
     }
-    
+
+    /**
+     * Returns the results of the user search term found in any of the fields
+     *
+     * @param searchTerm the user entered search term
+     * @return list of all matching jobs
+     */
     public static ArrayList<HashMap<String, String>> findByValue(String searchTerm) {
         // load data, if not already loaded
         loadData();
@@ -94,19 +102,18 @@ public class JobData implements Comparator<HashMap<String, String>> {
 
 
         for (HashMap<String, String> row : allJobs) {
-
+            // get the keyset to use to search all fields
             for (String key : row.keySet()) {
                 String aValue = row.get(key);
-
+                // perform case insensitive comparison
                 if (aValue.toLowerCase().contains(searchTerm.toLowerCase())) {
+                    // don't add if it's already there
                     if (!jobs.contains(row)) {
                         jobs.add(row);
                     }
                 }
             }
         }
-
-        
         return jobs;
     }
 
@@ -154,6 +161,6 @@ public class JobData implements Comparator<HashMap<String, String>> {
     @Override
     public int compare(HashMap<String, String> o1, HashMap<String, String> o2) {
         return o1.get(sortField).toLowerCase().compareTo(o2.get(sortField).toLowerCase());
-        // TODO: 5/11/18 need to fix, is still case sensitive 
+
     }
 }
