@@ -55,7 +55,8 @@ public class JobData implements Comparator<HashMap<String, String>> {
         // load data, if not already loaded
         loadData();
 
-        return allJobs;
+        ArrayList<HashMap<String, String>> jobsCopy = new ArrayList<>(allJobs);
+        return jobsCopy;
     }
 
     /**
